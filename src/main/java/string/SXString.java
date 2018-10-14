@@ -1,7 +1,5 @@
 package string;
 
-import java.util.Arrays;
-
 /**
  * @author: create by kevinYang
  * @version: v1.0
@@ -28,11 +26,14 @@ public class SXString implements IString {
         if (chars.length > 100) {
             throw new RuntimeException();
         }
-        for (int i = 0; i < chars.length; i++) {
-            this.stringElem[i] = chars[i];
-        }
+
 
         this.curlen = chars.length;
+//        this.stringElem[0] = (char) curlen;
+        for (int i = 0; i < chars.length; i++) {
+
+            this.stringElem[i] = chars[i];
+        }
     }
 
     @Override
@@ -137,6 +138,167 @@ public class SXString implements IString {
      *
      *
      * @author kevin
+     * @date 2018/10/11 15:18
+     * @param [sub, pos]
+     * @return int
+     * @description 朴素模式匹配算法，位置pos取值从1开始，匹配到返回位置，否则返回0
+     */
+    public int index_traditional(SXString sub, int pos) {
+
+        int i = pos - 1;//i:标记主串的下标
+        int j = 0;  //j：标记子串的下标
+        while (i < this.length() && j < sub.length()) {
+            if (this.get(i) == sub.get(j)) {              /*两个字母相等则继续*/
+                ++i;
+                ++j;
+
+            } else {
+                i = i - j + 1;                            /*主串不相等就退回至上次匹配的首位的下一个*/
+                j = 0;                           /*子串从头开始*/
+            }
+        }
+
+        if (j >= sub.length()) {
+            return i - sub.length() + 1;
+        } else {
+            return 0;
+        }
+
+    }
+
+
+    /*
+     *
+     *
+     * @author kevin
+     * @date 2018/10/14 17:03
+     * @param [sub, pos]
+     * @return int
+     * @description KMP算法
+     */
+    public int index_KMP(SXString sub, int pos) {
+        int[] next = SXString.getNext(sub);
+        int i = pos - 1;//i:标记主串的下标
+        int j = 0;  //j：标记子串的下标
+        while (i < this.length() && j < sub.length()) {
+            if (j == -1 || this.get(i) == sub.get(j)) {              /*两个字母相等则继续*/
+                ++i;
+                ++j;
+
+            } else {
+                j = next[j];                        /*子串从头开始*/
+            }
+        }
+
+        if (j >= sub.length()) {
+            return i - sub.length() + 1;
+        } else {
+            return 0;
+        }
+
+    }
+
+
+    /*
+     *
+     *
+     * @author kevin
+     * @date 2018/10/14 17:03
+     * @param
+     * @return
+     * @description KMP改进
+     */
+
+    public int index_KMP_Val(SXString sub, int pos) {
+        int[] nextVal = SXString.getNextVal(sub);
+        int i = pos - 1;//i:标记主串的下标
+        int j = 0;  //j：标记子串的下标
+        while (i < this.length() && j < sub.length()) {
+            if (j == -1 || this.get(i) == sub.get(j)) {              /*两个字母相等则继续*/
+                ++i;
+                ++j;
+
+            } else {
+                j = nextVal[j];                        /*子串从头开始*/
+            }
+        }
+
+        if (j >= sub.length()) {
+            return i - sub.length() + 1;
+        } else {
+            return 0;
+        }
+
+    }
+
+    /*
+     *
+     *
+     * @author kevin
+     * @date 2018/10/14 16:54
+     * @param [s]
+     * @return int[]
+     * @description KMP的next数组算法
+     */
+    public static int[] getNext(SXString s) {
+        int i = 0;  /*后缀的单个字符*/
+        int j = -1; /*前缀的单个字符*/
+        int[] next = new int[s.length()];
+        next[0] = -1;
+
+        while (i < next.length - 1) {
+            if (j == -1 || s.get(i) == s.get(j)) {/*后缀和前缀相等就向后移动一位，将此时的前缀的索引+1给next*/
+                ++i;
+                ++j;
+                next[i] = j;
+            } else {    /*否则，j就回溯到上一次相同的位置*/
+                j = next[j];
+            }
+        }
+
+        return next;
+
+    }
+
+    /*
+     *
+     *
+     * @author kevin
+     * @date 2018/10/14 16:54
+     * @param [s]
+     * @return int[]
+     * @description KMPnext数组改进方法
+     */
+    public static int[] getNextVal(SXString s) {
+        int i = 0;  /*后缀的单个字符*/
+        int j = -1; /*前缀的单个字符*/
+        int[] nextVal = new int[s.length()];
+        nextVal[0] = -1;
+
+        while (i < nextVal.length - 1) {
+            if (j == -1 || s.get(i) == s.get(j)) {/*后缀和前缀相等就向后移动一位，将此时的前缀的索引+1给next*/
+                ++i;
+                ++j;
+//                next[i] = j;
+
+                if (s.get(i) != s.get(j)) {
+                    nextVal[i] = j;                          /*当前字符和前缀字符不同，依旧是把之前为改良算法的next值原封不动的给nextVal*/
+                } else {
+                    nextVal[i] = nextVal[j];               /*若相等，则用和它相等的前缀j的next（nextVal）值赋值给当前的nextVal*/
+                }
+            } else {    /*否则，j就回溯到上一次相同的位置*/
+                j = nextVal[j];
+            }
+        }
+
+        return nextVal;
+
+    }
+
+    /*
+     *
+     *
+     * @author kevin
      * @date 2018/10/8 20:03
      * @param [s1, pos]
      * @return string.IString
@@ -222,7 +384,19 @@ public class SXString implements IString {
         return this;
     }
 
+    /*
+     *
+     *
+     * @author kevin
+     * @date 2018/10/11 15:24
+     * @param [i]
+     * @return char
+     * @description 获取第i的索引的字符
+     */
     public char get(int i) {
+        if (i >= length() || i < 0) {
+            throw new RuntimeException();
+        }
         return stringElem[i];
     }
 

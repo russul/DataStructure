@@ -101,6 +101,7 @@ public class LinkedString implements IString {
 
     @Override
     public int index(IString subStr, int pos) {
+
         return 0;
     }
 
