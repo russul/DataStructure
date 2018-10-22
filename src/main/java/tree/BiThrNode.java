@@ -13,6 +13,8 @@ public class BiThrNode {
     private NodeTag lTag;
     private NodeTag rTag;
 
+
+
     public Object getData() {
         return data;
     }
