@@ -296,8 +296,12 @@ public class BiThrTree {
 
 
         BiThrNode p = head.getrChild();
-        System.out.println(p.getData());             /*打印出中序遍历的第一个结点的数据*/
+//        System.out.println(p.getData());             /*打印出中序遍历的第一个结点的数据*/
         while (p != head) {         /*p==head（空树或者遍历结束）*/
+            while (p.getrTag() == NodeTag.Link) {        /*找到中序遍历的第一个结点*/
+                p = p.getrChild();
+            }
+            System.out.println(p.getData());             /*打印出中序遍历的第一个结点的数据*/
 
 
             while (p.getlTag() == NodeTag.Thread && p.getlChild() != head) {     /*从中序遍历的第一个结点逐个查找后继*/

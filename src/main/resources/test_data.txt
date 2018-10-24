@@ -1,0 +1,198 @@
+//邻接矩阵深度遍历测试数据（无向图）
+9 15
+A B C D E F G H I
+0 1 1
+0 5 1
+1 2 1
+1 6 1
+1 8 1
+2 3 1
+2 8 1
+3 4 1
+3 6 1
+3 7 1
+3 8 1
+4 5 1
+4 6 1
+5 6 1
+6 7 1
+//邻接矩阵深度遍历测试结果（无向图）
+A
+B
+C
+D
+E
+F
+G
+H
+I
+Infinity
+1.0
+Infinity
+Infinity
+Infinity
+1.0
+Infinity
+Infinity
+Infinity
+1.0
+Infinity
+1.0
+Infinity
+Infinity
+Infinity
+1.0
+Infinity
+1.0
+Infinity
+1.0
+Infinity
+1.0
+Infinity
+Infinity
+Infinity
+Infinity
+1.0
+Infinity
+Infinity
+1.0
+Infinity
+1.0
+Infinity
+1.0
+1.0
+1.0
+Infinity
+Infinity
+Infinity
+1.0
+Infinity
+1.0
+1.0
+Infinity
+Infinity
+1.0
+Infinity
+Infinity
+Infinity
+1.0
+Infinity
+1.0
+Infinity
+Infinity
+Infinity
+1.0
+Infinity
+1.0
+1.0
+1.0
+Infinity
+1.0
+Infinity
+Infinity
+Infinity
+Infinity
+1.0
+Infinity
+Infinity
+1.0
+Infinity
+Infinity
+Infinity
+1.0
+1.0
+1.0
+Infinity
+Infinity
+Infinity
+Infinity
+Infinity
+-----------开始深度优先遍历------------
+A
+B
+C
+D
+E
+F
+G
+H
+I
+-----------开始广度优先遍历------------
+A
+B
+F
+C
+G
+I
+E
+D
+H
+
+//邻接表深度遍历测试数据（有向图）
+9 15
+A B C D E F G H I
+8 3 1
+
+8 2 1
+
+7 4 1
+
+7 3 1
+
+6 7 1
+
+6 3 1
+
+6 1 1
+
+5 6 1
+
+5 0 1
+
+4 5 1
+
+3 4 1
+
+2 3 1
+
+1 8 1
+
+1 2 1
+
+0 1 1
+//邻接表深度遍历测试结果（有向图）
+----------图结构------------
+A
+TableNetGraphEdge{adjVex=1, weight=1.0}
+B
+TableNetGraphEdge{adjVex=2, weight=1.0}
+TableNetGraphEdge{adjVex=8, weight=1.0}
+C
+TableNetGraphEdge{adjVex=3, weight=1.0}
+D
+TableNetGraphEdge{adjVex=4, weight=1.0}
+E
+TableNetGraphEdge{adjVex=5, weight=1.0}
+F
+TableNetGraphEdge{adjVex=0, weight=1.0}
+TableNetGraphEdge{adjVex=6, weight=1.0}
+G
+TableNetGraphEdge{adjVex=1, weight=1.0}
+TableNetGraphEdge{adjVex=3, weight=1.0}
+TableNetGraphEdge{adjVex=7, weight=1.0}
+H
+TableNetGraphEdge{adjVex=3, weight=1.0}
+TableNetGraphEdge{adjVex=4, weight=1.0}
+I
+TableNetGraphEdge{adjVex=2, weight=1.0}
+TableNetGraphEdge{adjVex=3, weight=1.0}
+----------开始深度优先遍历------------
+A
+B
+C
+D
+E
+F
+G
+H
+I
