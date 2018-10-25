@@ -20,6 +20,9 @@ public class MatrixNetGraph implements Graph {
     private MatrixNetGraphVertex[] vertexes;/*顶点表*/
     private float[][] edges;        /*边数表*/
     private boolean[] visit;       /*顶点是否访问标志*/
+    /*用来实现最短路径弗洛伊德算法的两个二维数组*/
+    private int[][] pathMatrix;     /*记录前驱顶点的下标*/
+    private float[][] shortPathTable;   /*记录各点之间的最短路径*/
 
     private int numVertexes, numEdges;    /*图中当前的顶点数和边数*/
 
@@ -209,6 +212,57 @@ public class MatrixNetGraph implements Graph {
         }
 
     }
+
+
+    public void shortestPath_Floyd() {
+        int v, w, k;
+        this.pathMatrix = new int[MAX_VEX][MAX_VEX];
+        this.shortPathTable = new float[MAX_VEX][MAX_VEX];
+        /*初始化两个矩阵*/
+        for (v = 0; v < this.numVertexes; v++) {
+            for (w = 0; w < this.numVertexes; w++) {
+                this.pathMatrix[v][w] = w;
+                    if(v==w){
+                        this.shortPathTable[v][w] = 0;
+                    }else {
+                        this.shortPathTable[v][w] = this.edges[v][w];
+                    }
+
+
+
+            }
+        }
+
+        /*选取不同的前驱顶点对两个矩阵进行更新*/
+        for (k = 0; k < this.numVertexes; k++) {
+
+            for (v = 0; v < this.numVertexes; v++) {
+                for (w = 0; w < this.numVertexes; w++) {
+                    if (this.shortPathTable[v][w] > this.shortPathTable[v][k] + this.shortPathTable[k][w]) {
+                        this.shortPathTable[v][w] = this.shortPathTable[v][k] + this.shortPathTable[k][w];
+                        this.pathMatrix[v][w] = this.pathMatrix[v][k];
+                    }
+                }
+            }
+            System.out.println("--------------" + "D" + k + "-------------");
+            for (v = 0; v < this.numVertexes; v++) {
+                for (w = 0; w < this.numVertexes; w++) {
+                    System.out.print(this.shortPathTable[v][w] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println("--------------" + "P" + k + "-------------");
+            for (v = 0; v < this.numVertexes; v++) {
+                for (w = 0; w < this.numVertexes; w++) {
+                    System.out.print(this.pathMatrix[v][w]+ " ");
+                }
+                System.out.println();
+            }
+        }
+
+    }
+
+
 
     public MatrixNetGraphVertex[] getVertexes() {
         return vertexes;

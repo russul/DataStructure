@@ -35,6 +35,10 @@ public class test {
         matrixNetGraph.dfsTraverse();
         System.out.println("-----------开始广度优先遍历------------");
         matrixNetGraph.hfsTraverse();
+        System.out.println("-----------最短路径Floyd算法------------------");
+        matrixNetGraph.shortestPath_Floyd();
+
+
 
 /*        TableNetGraph tableNetGraph = new TableNetGraph();
         for (TableNetGraphVertex v:tableNetGraph.getVertexes()
