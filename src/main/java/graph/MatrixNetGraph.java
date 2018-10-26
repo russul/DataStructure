@@ -222,12 +222,11 @@ public class MatrixNetGraph implements Graph {
         for (v = 0; v < this.numVertexes; v++) {
             for (w = 0; w < this.numVertexes; w++) {
                 this.pathMatrix[v][w] = w;
-                    if(v==w){
-                        this.shortPathTable[v][w] = 0;
-                    }else {
-                        this.shortPathTable[v][w] = this.edges[v][w];
-                    }
-
+                if (v == w) {
+                    this.shortPathTable[v][w] = 0;
+                } else {
+                    this.shortPathTable[v][w] = this.edges[v][w];
+                }
 
 
             }
@@ -254,7 +253,7 @@ public class MatrixNetGraph implements Graph {
             System.out.println("--------------" + "P" + k + "-------------");
             for (v = 0; v < this.numVertexes; v++) {
                 for (w = 0; w < this.numVertexes; w++) {
-                    System.out.print(this.pathMatrix[v][w]+ " ");
+                    System.out.print(this.pathMatrix[v][w] + " ");
                 }
                 System.out.println();
             }
@@ -263,6 +262,55 @@ public class MatrixNetGraph implements Graph {
     }
 
 
+    public void shortestPath_Dijkstra(int v0) {
+        int k = 0;
+        boolean[] flag = new boolean[MAX_VEX];
+        int[] pathArc = new int[MAX_VEX];
+        float[] shortPathTable = new float[MAX_VEX];
+        for (int v = 0; v < this.numVertexes; v++) {
+            flag[v] = false;
+            shortPathTable[v] = this.edges[v0][v];
+            pathArc[v] = 0;
+        }
+//        for (int v=0;v<this.numVertexes;v++){
+//            this.edges[v][v] = 0;
+//        }
+
+        shortPathTable[v0] = 0;
+        flag[0] = true;
+        for (int v = 1; v < this.numVertexes; v++) {
+
+            float min = INFINITE;
+            for (int w = 0; w < this.numVertexes; w++) {
+                if (!flag[w] && shortPathTable[w] < min) {
+                    k = w;
+                    min = shortPathTable[w];
+                }
+            }
+
+            flag[k] = true;
+
+            for (int w = 0; w < this.numVertexes; w++) {
+                if (!flag[w] && ((min + this.edges[k][w]) < shortPathTable[w])) {
+                    shortPathTable[w] = min + this.edges[k][w];
+                    pathArc[w] = k;
+                }
+            }
+
+            System.out.println("---------------------------------");
+            for (int i = 0; i < this.numVertexes; i++) {
+                System.out.print(flag[i] + " ");
+            }
+            System.out.println();
+            for (int i = 0; i < this.numVertexes; i++) {
+                System.out.print(shortPathTable[i] + " ");
+            }
+            System.out.println();
+            for (int i = 0; i < this.numVertexes; i++) {
+                System.out.print(pathArc[i] + " ");
+            }
+        }
+    }
 
     public MatrixNetGraphVertex[] getVertexes() {
         return vertexes;

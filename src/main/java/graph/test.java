@@ -31,12 +31,15 @@ public class test {
             }
         }
 
-        System.out.println("-----------开始深度优先遍历------------");
+/*        System.out.println("-----------开始深度优先遍历------------");
         matrixNetGraph.dfsTraverse();
         System.out.println("-----------开始广度优先遍历------------");
         matrixNetGraph.hfsTraverse();
         System.out.println("-----------最短路径Floyd算法------------------");
-        matrixNetGraph.shortestPath_Floyd();
+        matrixNetGraph.shortestPath_Floyd();*/
+
+        System.out.println("--------------最短路径Dijkstra算法-----------");
+        matrixNetGraph.shortestPath_Dijkstra(0);
 
 
 
