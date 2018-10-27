@@ -237,7 +237,7 @@ public class MatrixNetGraph implements Graph {
 
             for (v = 0; v < this.numVertexes; v++) {
                 for (w = 0; w < this.numVertexes; w++) {
-                    if (this.shortPathTable[v][w] > this.shortPathTable[v][k] + this.shortPathTable[k][w]) {
+                    if (this.shortPathTable[v][w] > this.shortPathTable[v][k] + this.shortPathTable[k][w]) {    //核心代码三个循环嵌套
                         this.shortPathTable[v][w] = this.shortPathTable[v][k] + this.shortPathTable[k][w];
                         this.pathMatrix[v][w] = this.pathMatrix[v][k];
                     }
@@ -264,10 +264,10 @@ public class MatrixNetGraph implements Graph {
 
     public void shortestPath_Dijkstra(int v0) {
         int k = 0;
-        boolean[] flag = new boolean[MAX_VEX];
-        int[] pathArc = new int[MAX_VEX];
-        float[] shortPathTable = new float[MAX_VEX];
-        for (int v = 0; v < this.numVertexes; v++) {
+        boolean[] flag = new boolean[MAX_VEX];    //标志数值，标志顶点是否被纳入最短路径了
+        int[] pathArc = new int[MAX_VEX];         /*记录定点的前驱定点*/
+        float[] shortPathTable = new float[MAX_VEX];/*该顶点到各个顶点的最短路径*/
+        for (int v = 0; v < this.numVertexes; v++) {    //初始化
             flag[v] = false;
             shortPathTable[v] = this.edges[v0][v];
             pathArc[v] = 0;
@@ -276,21 +276,21 @@ public class MatrixNetGraph implements Graph {
 //            this.edges[v][v] = 0;
 //        }
 
-        shortPathTable[v0] = 0;
+        shortPathTable[v0] = 0;                //给源点初始化
         flag[0] = true;
-        for (int v = 1; v < this.numVertexes; v++) {
+        for (int v = 1; v < this.numVertexes; v++) {       //这里v从1开始是因为自己到自己最短路径不用求
 
             float min = INFINITE;
             for (int w = 0; w < this.numVertexes; w++) {
-                if (!flag[w] && shortPathTable[w] < min) {
+                if (!flag[w] && shortPathTable[w] < min) {   //寻找离v0最近的顶点
                     k = w;
-                    min = shortPathTable[w];
+                    min = shortPathTable[w];              //w顶点离v0更近，更新值
                 }
             }
 
-            flag[k] = true;
+            flag[k] = true;                               //将目前找到的最近的顶点置为1
 
-            for (int w = 0; w < this.numVertexes; w++) {
+            for (int w = 0; w < this.numVertexes; w++) {        //修正当前最短路径及距离
                 if (!flag[w] && ((min + this.edges[k][w]) < shortPathTable[w])) {
                     shortPathTable[w] = min + this.edges[k][w];
                     pathArc[w] = k;
