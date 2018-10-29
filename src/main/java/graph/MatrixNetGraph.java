@@ -312,6 +312,43 @@ public class MatrixNetGraph implements Graph {
         }
     }
 
+    public void miniSpanTree_Prim() {
+        int[] adjVex = new int[MAX_VEX];   /*保留相关顶点下标*/
+        float[] lowCost = new float[MAX_VEX];  /*保留相关顶点间边的权值*/
+
+        /*初始化，从第一个顶点开始，初始化第一个权值为0，代表v0已经加入生成树中*/
+        lowCost[0] = 0;/*初始化第一个权值为0（lowCost=0），代表v0已经加入生成树中*/
+        adjVex[0] = 0;/*初始化第一个顶点下标是0*/
+
+        for (int i = 0; i < this.numVertexes; i++) {
+            adjVex[i] = 0;                      /*初始化都是v0的下标*/
+            lowCost[i] = this.edges[0][i];       /*初始化为与v0有边的权值*/
+        }
+
+        /*开始寻找生成树*/
+        for (int i = 1; i < this.numVertexes; i++) {
+            float min = INFINITE;
+            int j = 1, k = 0;
+            while (j < this.numVertexes) {
+                if (lowCost[j] < min && lowCost[j] != 0) {
+                    min = lowCost[j];             /*让当前权值成为最小值*/
+                    k = j;                         /*将最小值的下标存入k（此时k为弧头）*/
+                }
+                j++;
+            }
+            System.out.println("(" + adjVex[k] + "," + k + ")");   /*所以这里的k,adjVex[k]就是当前权值一条最小的边*/
+
+            lowCost[k] = 0;                  /*将找到的顶点lowCost赋值为0，代表该顶点已经纳入最小生成树，并不在参与后续最小权值的比较*/
+
+            for (j = 1; j < this.numVertexes; j++) {
+                if (lowCost[j] != 0 && this.edges[k][j] < lowCost[j]) {
+                    lowCost[j] = this.edges[k][j];                      /* 此时再寻找以k为弧尾的边的权值的较小值加入lowCost*/
+                    adjVex[j] = k;
+                }
+            }
+        }
+    }
+
     public MatrixNetGraphVertex[] getVertexes() {
         return vertexes;
     }

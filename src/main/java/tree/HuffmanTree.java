@@ -78,6 +78,8 @@ public class HuffmanTree {
 
     }
 
+
+
     public void preOrderTraverse(HuffmanNode node) {
 
         if (node != null) {

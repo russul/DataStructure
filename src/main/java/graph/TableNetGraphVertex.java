@@ -12,6 +12,9 @@ public class TableNetGraphVertex implements Vertex {
     private TableNetGraphEdge firstEdge;
 
 
+    public TableNetGraphVertex() {
+    }
+
     public TableNetGraphVertex(Object data) {
         this.data = data;
         this.firstEdge = null;

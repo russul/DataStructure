@@ -7,6 +7,9 @@ package graph;
  * @date:2018/10/23
  */
 public class MatrixNetGraphVertex implements Vertex{
+    public MatrixNetGraphVertex() {
+    }
+
     private Object data;
 
     public MatrixNetGraphVertex(Object data) {

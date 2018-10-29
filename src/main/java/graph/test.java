@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class test {
     public static void main(String[] args) {
 
-        /*邻接矩阵的测试*/
+/*        *//*邻接矩阵的测试*//*
         MatrixNetGraph matrixNetGraph = new MatrixNetGraph();
         matrixNetGraph.createGraph();
         MatrixNetGraphVertex[] netGraphVertices = matrixNetGraph.getVertexes();
@@ -29,7 +29,7 @@ public class test {
             for (int j = 0; j < matrixNetGraph.getNumVertexes(); j++) {
                 System.out.println(edges[i][j]);
             }
-        }
+        }*/
 
 /*        System.out.println("-----------开始深度优先遍历------------");
         matrixNetGraph.dfsTraverse();
@@ -38,9 +38,16 @@ public class test {
         System.out.println("-----------最短路径Floyd算法------------------");
         matrixNetGraph.shortestPath_Floyd();*/
 
-        System.out.println("--------------最短路径Dijkstra算法-----------");
-        matrixNetGraph.shortestPath_Dijkstra(0);
+//        System.out.println("--------------最短路径Dijkstra算法-----------");
+//        matrixNetGraph.shortestPath_Dijkstra(0);
 
+//        System.out.println("------------------最小生成树Prim算法-------------------");
+//        matrixNetGraph.miniSpanTree_Prim();
+
+//        /*边集数组测试最小生成树Kruskal算法*/
+//        EdgeArrayNetGraph edgeArrayNetGraph = new EdgeArrayNetGraph();
+//        System.out.println("------------------最小生成树Kruskal算法-------------------");
+//        edgeArrayNetGraph.miniSpanTree_Kruskal();
 
 
 /*        TableNetGraph tableNetGraph = new TableNetGraph();
@@ -88,5 +95,15 @@ public class test {
 //                }
 //            }
 //        }
+
+//
+//        /*拓扑排序测试*/
+//        System.out.println("-----------------拓扑排序测试------------------");
+//        AOVGraph aovGraph = new AOVGraph();
+//        aovGraph.topologicalSort();
+
+        System.out.println("----------------关键路径测试--------------------");
+        AOVGraph aovGraph = new AOVGraph();
+        aovGraph.criticalPath();
     }
 }

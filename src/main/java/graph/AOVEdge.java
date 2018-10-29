@@ -3,17 +3,17 @@ package graph;
 /**
  * @author: create by kevinYang
  * @version: v1.0
- * @description: 邻接表结点
- * @date:2018/10/24
+ * @description: 和邻接表的边结构一致
+ * @date:2018/10/29
  */
-public class TableNetGraphEdge implements Edge{
+public class AOVEdge  implements Edge{
 
     private int adjVex;/*邻接点域*/
     private Float weight; /*权值*/
-    private TableNetGraphEdge next;/*下一个邻接点*/
+    private AOVEdge next;/*下一个邻接点*/
 
 
-    public TableNetGraphEdge(int adjVex, Float weight) {
+    public AOVEdge(int adjVex, Float weight) {
         this.adjVex = adjVex;
         this.weight = weight;
         this.next = null;
@@ -35,19 +35,21 @@ public class TableNetGraphEdge implements Edge{
         this.weight = weight;
     }
 
-    public TableNetGraphEdge getNext() {
-        return next;
-    }
 
-    public void setNext(TableNetGraphEdge next) {
-        this.next = next;
-    }
 
     @Override
     public String toString() {
-        return "TableNetGraphEdge{" +
+        return "AOVEdge{" +
                 "adjVex=" + adjVex +
                 ", weight=" + weight +
                 '}';
+    }
+
+    public AOVEdge getNext() {
+        return next;
+    }
+
+    public void setNext(AOVEdge next) {
+        this.next = next;
     }
 }

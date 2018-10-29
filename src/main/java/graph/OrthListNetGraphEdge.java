@@ -6,7 +6,7 @@ package graph;
  * @description: graph
  * @date:2018/10/24
  */
-public class OrthListNetGraphEdge {
+public class OrthListNetGraphEdge implements Edge{
 
     private int tailVex;     /*起点的顶点下标*/
     private int headVex;     /*终点的顶点下标*/
