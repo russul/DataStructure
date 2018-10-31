@@ -3,7 +3,7 @@ package graph;
 /**
  * @author: create by kevinYang
  * @version: v1.0
- * @description: 拓扑排序的顶点结构
+ * @description: AOV或AOE的顶点结构
  * @date:2018/10/29
  */
 public class AOVVertex implements Vertex {

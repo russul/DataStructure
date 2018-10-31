@@ -6,7 +6,7 @@ import java.util.Stack;
 /**
  * @author: create by kevinYang
  * @version: v1.0
- * @description: graph
+ * @description: AOV网或者AOE网
  * @date:2018/10/29
  */
 public class AOVGraph implements Graph {
@@ -159,7 +159,15 @@ public class AOVGraph implements Graph {
         }
     }
 
-
+    /*
+     *
+     *
+     * @author kevin
+     * @date 2018/10/30 9:41
+     * @param []
+     * @return void
+     * @description 关键路径算法
+     */
     public void criticalPath() {
 
         topologicalSort2();

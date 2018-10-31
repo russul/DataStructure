@@ -3,7 +3,7 @@ package graph;
 /**
  * @author: create by kevinYang
  * @version: v1.0
- * @description: 和邻接表的边结构一致
+ * @description: AOV或AOE的边结构和邻接表的边结构一致
  * @date:2018/10/29
  */
 public class AOVEdge  implements Edge{
