@@ -66,7 +66,7 @@ public class AVLTree {
                 }
 
                 Lr.setBalanceFactor(EH);
-                root = leftRotate(root.getLeftChild());
+                root.setLeftChild(leftRotate(root.getLeftChild()));
                 root = rightRotate(root);
 
             }
@@ -75,7 +75,50 @@ public class AVLTree {
         return root;
     }
 
+
     public AVLTNode rightBalance(AVLTNode root) {
+
+        AVLTNode R = root.getRightChild();
+
+        switch (R.getBalanceFactor()) {
+            case RH: {
+
+                root.setBalanceFactor(EH);
+                R.setBalanceFactor(EH);
+                root = leftRotate(root);
+                break;
+            }
+            case LH: {
+
+                AVLTNode Rl = R.getLeftChild();
+
+                switch (Rl.getBalanceFactor()) {
+                    case LH: {
+                        root.setBalanceFactor(EH);
+                        R.setBalanceFactor(RH);
+                        break;
+                    }
+                    case EH: {
+                        root.setBalanceFactor(EH);
+                        R.setBalanceFactor(EH);
+                        break;
+                    }
+
+                    case RH: {
+                        root.setBalanceFactor(LH);
+                        R.setBalanceFactor(EH);
+                        break;
+                    }
+                }
+
+
+                Rl.setBalanceFactor(EH);
+                root.setRightChild(rightRotate(root.getRightChild()));
+                root = leftRotate(root);
+
+            }
+        }
+
         return root;
     }
 
