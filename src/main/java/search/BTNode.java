@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class BTNode {
 
-    private boolean leaf = true;
+    private boolean leaf = false;
     private int n;  /*每个结点的元素个数（+1成该节点的度）*/
     private List<Integer> keys = new ArrayList<Integer>();
     private List<BTNode> children = new ArrayList<BTNode>();
@@ -78,5 +78,15 @@ public class BTNode {
 
     public void setN(int n){
         this.n = n;
+    }
+
+    @Override
+    public String toString() {
+        return "BTNode{" +
+                "leaf=" + leaf +
+                ", n=" + n +
+                ", keys=" + keys +
+                ", children=" + children +
+                '}';
     }
 }
