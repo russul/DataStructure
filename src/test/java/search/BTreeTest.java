@@ -65,5 +65,6 @@ public class BTreeTest {
 
         System.out.println("-------------测试分裂--------------------");
         bTree.setRoot(bTree.spiltBT(bTree.getRoot(),0));
+        BTNode root = bTree.getRoot();
     }
 }

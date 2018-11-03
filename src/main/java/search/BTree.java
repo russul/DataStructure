@@ -35,7 +35,7 @@ public class BTree {
         } else {
             /*查询到则放回该结点*/
             for (Integer data : root.getKeys()
-                    ) {
+            ) {
                 if (data.equals(key)) {
                     current = root;
                     return current;
@@ -85,7 +85,7 @@ public class BTree {
         } else {
             /*查询到则放回该结点*/
             for (Integer data : root.getKeys()
-                    ) {
+            ) {
                 if (data.equals(key)) {
                     /*查询成功，返回当前结点*/
                     current = root;
@@ -133,7 +133,7 @@ public class BTree {
 
 
             for (Integer data : root.getKeys()
-                    ) {
+            ) {
                 if (data.equals(key)) {
                     System.out.println("(" + data + "," + root.getKeys().indexOf(data) + ")");
                 }
@@ -166,8 +166,14 @@ public class BTree {
         /*得到给满结点，之后把它作为一个分裂结点*/
         BTNode spilt1 = node.getChildren().get(i);
 
-        /*我么可以计算出来结点最小的度*/
-        int t = spilt1.getN() / 2 + 1;
+        /*我么可以计算出来结点最小的度,也是分裂点的位置*/
+        int t;
+        if (spilt1.getN() % 2 == 0) {
+            t = spilt1.getN() / 2;
+        } else {
+            t = spilt1.getN() / 2 + 1;
+        }
+
 
 
         /*第二个分裂结点*/
@@ -206,23 +212,25 @@ public class BTree {
         node.getChildren().add(node.getChildren().get(node.getChildren().size() - 1));
 
         /*让node结点的孩子指针从i+1开始都向后一位，为了腾一个位置给从分裂多出来的一个结点*/
-        for (int j = node.getN(); j >= i; j--) {
+        for (int j = node.getN(); j >= i + 1; j--) {
             node.getChildren().set(j + 1, node.getChildren().get(j));
         }
 
         /*将腾出的孩子结点位置连接新建的第二个分裂点*/
         node.getChildren().set(i + 1, spilt2);
 
-
+        /*将key的集合长度+1*/
+        node.getKeys().add(node.getKeys().get(node.getKeys().size() - 1));
         /*将关键字也向后移动一位，从i开始*/
-        for (int j = node.getN()-1; j >= i-1; j--) {
+
+        for (int j = node.getN()-1 ; j >= i; j--) {
             node.getKeys().set(j + 1, node.getKeys().get(j));
         }
 
         /*腾出来的关键字地方赋值因为分裂而从满结点中出来的那个关键字*/
-        node.getKeys().set(i, spilt1.getKeys().get(t));
+        node.getKeys().set(i, spilt1.getKeys().get(t-1));
         /*从spilt1中把分裂出来的关键字去除*/
-        spilt1.getKeys().remove(t-1);
+        spilt1.getKeys().remove(t - 1);
 
         /*将node的存储元素个数+1*/
         node.setN(node.getN() + 1);
@@ -243,7 +251,7 @@ public class BTree {
     public void inOrderTraverse(BTNode root) {
         if (root.getChildren().size() == 0) {    /*如果是叶子结点就输出key然后返回，是递归的出口*/
             for (int key : root.getKeys()
-                    ) {
+            ) {
                 System.out.println(key);
             }
             return;
