@@ -44,10 +44,6 @@ public class BiSortTreeTest {
     }
 
     @Test
-    public void deleteBST() {
-    }
-
-    @Test
     public void delete() {
     }
 }

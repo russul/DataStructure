@@ -9,11 +9,24 @@ package test;
 public class A {
 
     public String name;
+    private int age;
 
-/*    @Override
-    public String toString() {
-        return "A{" +
-                "name='" + name + '\'' +
-                '}';
-    }*/
+    public A() {
+
+        System.out.println("A的构造方法执行了");
+    }
+
+    private void  f(){
+
+    }
+
+    public void f2(){}
+
+    private final void f3(){
+
+    }
+
+    final void f4(){
+
+    }
 }

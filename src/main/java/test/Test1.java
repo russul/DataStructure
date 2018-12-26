@@ -19,4 +19,31 @@ public class Test1 {
         a.name = "li";
         System.out.println("形参:" + a);
     }
+
+    public static A change3(A a) {
+        a = new A();
+        System.out.println("形参:" + a);
+        return a;
+    }
+
+    public static void add(byte b){
+        b = b++;
+    }
+
+    public static byte add2(byte b){
+        System.out.println("前："+b);
+
+//        b = b++;
+        b++;
+        System.out.println("后："+b);
+        return b;
+    }
+
+
+
+    public static void fun1(String s,int i){}
+    private static void fun1(int i, String s){}
+
+
+
 }
