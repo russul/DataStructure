@@ -229,7 +229,7 @@ public class RBTree {
 
                     } else {
                         RBNode parent = z.parent.parent.parent;
-                        leftRotateRoot = rightRotate(z.parent.parent);
+                        leftRotateRoot = leftRotate(z.parent.parent);
 
                         parent.right = leftRotateRoot;
                         leftRotateRoot.parent = parent;
@@ -348,36 +348,74 @@ public class RBTree {
      *
      * @author kevin
      * @date 2019/1/9 0009 22:47
-     * @param [x]:待删除结点的右孩子
+     * @param [x]:取代结点的右孩子（因为出问题必然在取代结点的右子树上），此时待删除结点已经被删除了
      * @return void
-     * @description
+     * @description:修复因为删除节点造成的红黑树性质破坏（根节点必须是黑色和各路径上的黑高相同）
+     * 引入两个概念：双重黑色与红黑色，
+     * 是为了解决删除结点而造成的黑高不足，额外给结点添加一层黑色（这和结点的color属性值不同），修护关系就是通过操作去掉这层额外的黑色
+     * 双层黑色结点：该结点要贡献两个黑结点（它的color属性黑色+额外的一个虚拟的黑色=2）
+     * 红黑色结点：该结点只贡献一个黑结点（它的color属性为红色+额外的一个虚拟的黑色=1）
      */
     private void RBDelete_FixUp(RBNode x) {
         RBNode w;
-        while (x != root && x.color == false) {
+
+        RBNode leftRotateRoot;
+        RBNode rightRotateRoot;
+        RBNode grandParent = x.parent.parent;
+
+        //循环终止条件x如果是红色的，它之上的红黑树性质没有被破坏
+        while (x != root && x.color == false) {   //一旦进入循环时x必然是双重黑色的
             if (x == x.parent.left) {
+
                 w = x.parent.right;
 
+
+                //有四种情景
+                //1.x的兄弟结点w是红色的：x.parent进行左旋并改变w和x.parent的颜色变为情景2
+                //2.x的兄弟结点w是黑色的且w的两个子结点都是黑色的：让x去掉一重黑色的措施就是将w变为红色
+                //3.x的兄弟结点w是黑色的且w的左孩子是红色的，右孩子是黑色的：交换w和w.left的颜色进行右旋变为情景4
+                //4.x的兄弟结点w是黑色的且w的右孩子是红色的：将w和w.right的颜色交换，做一次左旋操作
+                //1-->2;3-->4;只要处理2,4两种情况即可
                 if (w.color == true) {
+                    //case1
                     w.color = false;
                     x.parent.color = true;
-                    leftRotate(x.parent);
+
+//                    RBNode grandParent = x.parent.parent;
+                    leftRotateRoot = leftRotate(x.parent);
+
+                    leftRotateRoot.parent = grandParent;
+                    if (x.parent == grandParent.left){
+                        grandParent.left = leftRotateRoot;
+                    }else {
+                        grandParent.right = leftRotateRoot;
+                    }
+
                     w = x.parent.right;
                 }
+
                 if (w.left.color == false && w.right.color == false) {
+                    //case2
                     w.color = true;
                     x = x.parent;
                 } else {
+                    //case3
                     if (w.right.color == false) {
                         w.left.color = false;
                         w.color = true;
-                        rightRotate(w);
+                        rightRotateRoot = rightRotate(w);
+                        rightRotateRoot.parent = x.parent;
+                        x.parent.right = rightRotateRoot;
                         w = x.parent.right;
                     }
+
+                    //case4
                     w.color = x.parent.color;
                     x.parent.color = false;
                     w.right.color = false;
-                    leftRotate(x.parent);
+                    leftRotateRoot = leftRotate(x.parent);
+                    x.parent.parent = leftRotateRoot;
+                    leftRotateRoot.left = x.parent;
                     x = root;
                 }
 
@@ -386,30 +424,47 @@ public class RBTree {
                 w = x.parent.left;
 
                 if (w.color == true) {
+                    //case1
                     w.color = false;
                     x.parent.color = true;
-                    rightRotate(x.parent);
-                    w = x.parent.right;
+                    rightRotateRoot=rightRotate(x.parent);
+                    rightRotateRoot.parent = grandParent;
+                    if (x.parent == grandParent.left){
+                        grandParent.left = rightRotateRoot;
+                    }else {
+                        grandParent.right = rightRotateRoot;
+                    }
+                    w = x.parent.left;
                 }
                 if (w.left.color == false && w.right.color == false) {
+                    //case2
                     w.color = true;
                     x = x.parent;
                 } else {
+                    //case3:左孩子黑色，右孩子红色
                     if (w.left.color == false) {
                         w.right.color = false;
                         w.color = true;
-                        rightRotate(w);
+                        leftRotateRoot=leftRotate(w);
+                        x.parent.left = leftRotateRoot;
+                        x.parent = leftRotateRoot.parent;
                         w = x.parent.left;
                     }
+
+                    //case4:w的左孩子是红色
                     w.color = x.parent.color;
                     x.parent.color = false;
                     w.left.color = false;
-                    leftRotate(x.parent);
+                    rightRotateRoot=rightRotate(x.parent);
+                    x.parent.parent = rightRotateRoot;
+                    rightRotateRoot.right = x.parent;
+                    //修复完成，退出
                     x = root;
                 }
             }
 
 
+            //修复根节点不是黑色的性质
             x.color = false;
         }
     }

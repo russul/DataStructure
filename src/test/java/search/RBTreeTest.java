@@ -27,6 +27,10 @@ public class RBTreeTest {
         RBNode node4 = new RBNode(5,true);
         RBNode node5 = new RBNode(1,true);
         RBNode node6 = new RBNode(7,true);
+        RBNode node7 = new RBNode(12,true);
+        RBNode node8 = new RBNode(25,true);
+        RBNode node9 = new RBNode(23,true);
+        RBNode node10 = new RBNode(33,true);
 
 
 
@@ -37,6 +41,16 @@ public class RBTreeTest {
         tree.RBInsert(node4);
         tree.RBInsert(node5);
         tree.RBInsert(node6);
+        tree.RBInsert(node7);
+        tree.RBInsert(node8);
+        tree.RBInsert(node9);
+        tree.RBInsert(node10);
+//        tree.RBInsert(node6);
+
+//        tree.RBDelete(node10);
+//        tree.RBDelete(node2);
+
+        tree.RBDelete(node);
 
         tree.toString();
 
