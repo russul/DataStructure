@@ -348,7 +348,7 @@ public class RBTree {
      *
      * @author kevin
      * @date 2019/1/9 0009 22:47
-     * @param [x]:取代结点的右孩子（因为出问题必然在取代结点的右子树上），此时待删除结点已经被删除了
+     * @param [x]:取代结点的右孩子(在删除结点时要先用该结点取代 取代结点)（因为出问题必然在取代结点的右子树上），此时待删除结点已经被删除了
      * @return void
      * @description:修复因为删除节点造成的红黑树性质破坏（根节点必须是黑色和各路径上的黑高相同）
      * 引入两个概念：双重黑色与红黑色，
@@ -396,6 +396,7 @@ public class RBTree {
 
                 if (w.left.color == false && w.right.color == false) {
                     //case2
+                    //让x去掉一重黑色的措施就是将w变为红色，这样为了补偿x和w上去除的一层黑色就需要给x.parent加上一个额外的黑色，继续迭代
                     w.color = true;
                     x = x.parent;
                 } else {
@@ -464,9 +465,11 @@ public class RBTree {
             }
 
 
-            //修复根节点不是黑色的性质
-            x.color = false;
+
         }
+
+        //修复节点不是黑色的性质
+        x.color = false;
     }
 
 }
